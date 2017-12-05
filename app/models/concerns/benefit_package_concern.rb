@@ -5,8 +5,8 @@ module BenefitPackageConcern
 
   included do
     include Mongoid::Document
-    include Mongoid::Timestamps      
-    
+    include Mongoid::Timestamps
+
     embedded_in :benefit_coverage_period
 
     field :title, type: String, default: ""
@@ -21,12 +21,12 @@ module BenefitPackageConcern
 
     delegate :start_on, :end_on, to: :benefit_coverage_period
 
-    delegate :market_places, :enrollment_periods, :family_relationships, :benefit_categories, 
+    delegate :market_places, :enrollment_periods, :family_relationships, :benefit_categories,
              :incarceration_status, :age_range, :citizenship_status, :residency_status, :ethnicity, :cost_sharing,
              to: :benefit_eligibility_element_group
 
-    delegate :market_places=, :enrollment_periods=, :family_relationships=, :benefit_categories=, 
-             :incarceration_status=, :age_range=, :citizenship_status=, :residency_status=, :ethnicity=, 
+    delegate :market_places=, :enrollment_periods=, :family_relationships=, :benefit_categories=,
+             :incarceration_status=, :age_range=, :citizenship_status=, :residency_status=, :ethnicity=,
              to: :benefit_eligibility_element_group
 
 
@@ -35,14 +35,6 @@ module BenefitPackageConcern
 
     after_initialize :initialize_dependent_models
 
-    def initialize_dependent_models
-      build_benefit_eligibility_element_group if benefit_eligibility_element_group.nil?
-    end
-
-    def effective_year
-      start_on.year
-    end
-    
     validates :elected_premium_credit_strategy,
       allow_blank: false,
       inclusion: {
@@ -62,13 +54,21 @@ module BenefitPackageConcern
     # 2. Employer fixed cost: employer fixed dollar amount applied toward employee's total premium cost
     # 3. Employee fixed cost: employee costs defined, regardless of age, and employer pays the difference
     # 4. Allocated lump sum credit (e.g. APTC): fixed dollar amount apportioned among eligible relationship categories
-    # 5. Percentage contribution: contribution ratio applied to each eligible relationship category 
-    # 6. Indexed percentage contribution (e.g. DCHL SHOP method): using selected reference benefit, contribution ratio applied to each eligible relationship category 
+    # 5. Percentage contribution: contribution ratio applied to each eligible relationship category
+    # 6. Indexed percentage contribution (e.g. DCHL SHOP method): using selected reference benefit, contribution ratio applied to each eligible relationship category
     # 7. Federal Employee Health Benefits (FEHB - congress): percentage contribution, with employer cost cap
 
-    PREMIUM_CREDIT_STRATEGY_KINDS  = %w(unassisted employer_fixed_cost employee_fixed_cost allocated_lump_sum_credit 
+    PREMIUM_CREDIT_STRATEGY_KINDS  = %w(unassisted employer_fixed_cost employee_fixed_cost allocated_lump_sum_credit
                                         percentage_contribution indexed_percentage_contribution, federal_employee_health_benefit)
 
 
+  end
+
+  def initialize_dependent_models
+    build_benefit_eligibility_element_group if benefit_eligibility_element_group.nil?
+  end
+
+  def effective_year
+    start_on.year
   end
 end

@@ -26,22 +26,6 @@ module HbxProfileConcern
 
     after_initialize :build_nested_models
 
-    def advance_day
-    end
-
-    def advance_month
-    end
-
-    def advance_quarter
-    end
-
-    def advance_year
-    end
-
-    def under_open_enrollment?
-      (benefit_sponsorship.present? && benefit_sponsorship.is_under_open_enrollment?) ?  true : false
-    end
-    
     class << self
       def find(id)
         org = Organization.where("hbx_profile._id" => BSON::ObjectId.from_string(id)).first
@@ -61,8 +45,29 @@ module HbxProfileConcern
         Organization.exists(hbx_profile: true).all.reduce([]) { |set, org| set << org.hbx_profile }
       end
     end
-    
-    private
+  end
+
+  class_methods do
+
+  end
+
+  def advance_day
+  end
+
+  def advance_month
+  end
+
+  def advance_quarter
+  end
+
+  def advance_year
+  end
+
+  def under_open_enrollment?
+    (benefit_sponsorship.present? && benefit_sponsorship.is_under_open_enrollment?) ?  true : false
+  end
+
+  private
     def build_nested_models
       build_inbox if inbox.nil?
     end
@@ -73,9 +78,4 @@ module HbxProfileConcern
       @inbox.save
       @inbox.messages.create(subject: welcome_subject, body: welcome_body)
     end
-  end
-
-  class_methods do
-    
-  end
 end

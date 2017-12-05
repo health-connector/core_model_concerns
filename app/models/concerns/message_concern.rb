@@ -24,18 +24,18 @@ module MessageConcern
     scope :by_message_id, ->(id){where(:id => id)}
 
     alias_method :message_read?, :message_read
-
-    private
-      def set_timestamp
-        self.created_at = Time.now.utc
-      end
-
-      def message_has_content
-        errors.add(:base, "message subject and body cannot be blank") if subject.blank? && body.blank?
-      end
   end
-  
+
   class_methods do
     FOLDER_TYPES = {inbox: "inbox", sent: "sent", deleted: "deleted"}
   end
+
+  private
+    def set_timestamp
+      self.created_at = Time.now.utc
+    end
+
+    def message_has_content
+      errors.add(:base, "message subject and body cannot be blank") if subject.blank? && body.blank?
+    end
 end
