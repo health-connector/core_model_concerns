@@ -1,5 +1,7 @@
 gem 'core_model_concerns', path:  File.expand_path("../../../..", __FILE__)
-gem 'location_model_concerns', path: "~/Work/mass/location_model_concerns"
+#gem 'location_model_concerns', path: "~/Work/mass/location_model_concerns"
+gem 'location_model_concerns', git: 'https://github.com/health-connector/location_model_concerns'
+
 gem 'acapi', git: "https://github.com/dchbx/acapi.git", branch: 'development'
 gem "config", '~> 1.0.0'
 gem 'aasm', '~> 4.8.0'
