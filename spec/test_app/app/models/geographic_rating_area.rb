@@ -1,0 +1,3 @@
+class GeographicRatingAreaConcern
+  include GeographicRatingAreaConcern
+end

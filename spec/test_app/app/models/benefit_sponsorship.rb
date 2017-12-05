@@ -1,0 +1,3 @@
+class BenefitSponsorship
+  include BenefitSponsorshipConcern
+end

@@ -1,0 +1,24 @@
+gem 'core_model_concerns', path:  File.expand_path("../../../..", __FILE__)
+gem 'location_model_concerns', path: "~/Work/mass/location_model_concerns"
+gem 'acapi', git: "https://github.com/dchbx/acapi.git", branch: 'development'
+gem "config", '~> 1.0.0'
+gem 'aasm', '~> 4.8.0'
+
+group :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'simplecov', '0.14.1', :require => false
+  gem 'mongoid-rspec', '3.0.0'
+  gem 'watir'
+  gem 'webmock'
+  gem 'cucumber-rails', '~> 1.4.2', :require => false
+  gem 'poltergeist'
+  gem 'capybara-screenshot'
+  gem 'database_cleaner', '1.5.3'
+  gem 'shoulda-matchers', '3.1.1'
+  gem 'action_mailer_cache_delivery', '~> 0.3.7'
+  gem 'capybara', '2.6.2'
+  gem 'warden'
+  gem 'fakeredis', :require => 'fakeredis/rspec'
+  gem 'rspec-instafail'
+end

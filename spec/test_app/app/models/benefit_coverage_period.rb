@@ -1,0 +1,3 @@
+class BenefitCoveragePeriod
+  include BenefitCoveragePeriodConcern
+end
