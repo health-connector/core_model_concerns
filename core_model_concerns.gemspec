@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "rails", "~> 4.2.3"
-  s.add_dependency 'mongo', '2.1.2'
-  s.add_dependency 'mongoid', '5.0.1'
+  s.add_dependency 'mongo', '~> 2.1.2'
+  s.add_dependency 'mongoid', '~> 5.0.1'
   s.add_dependency 'mongoid-versioning'
   s.add_dependency 'mongoid_userstamp'
   s.add_dependency "mongoid-autoinc"
