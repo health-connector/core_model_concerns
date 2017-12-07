@@ -5,6 +5,9 @@ gem 'location_model_concerns', git: 'https://github.com/health-connector/locatio
 gem 'acapi', git: "https://github.com/dchbx/acapi.git", branch: 'development'
 gem "config", '~> 1.0.0'
 gem 'aasm', '~> 4.8.0'
+gem 'mongoid'
+gem 'mongoid-versioning'
+gem 'symmetric-encryption', '~> 3.6.0'
 
 group :test do
   gem 'rspec-rails'

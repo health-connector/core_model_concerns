@@ -6,7 +6,6 @@ module OrganizationConcern
   included do
     include Mongoid::Document
     include Mongoid::Timestamps
-    include Mongoid::Versioning
 
     embeds_one :hbx_profile, cascade_callbacks: true, validate: true
     embeds_many :office_locations, cascade_callbacks: true, validate: true
@@ -15,7 +14,6 @@ module OrganizationConcern
 
     before_save :generate_hbx_id
     after_update :legal_name_or_fein_change_attributes,:if => :check_legal_name_or_fein_changed?
-    after_save :validate_and_send_denial_notice
 
     field :hbx_id, type: String
     field :issuer_assigned_id, type: String
@@ -102,14 +100,8 @@ module OrganizationConcern
     end
   end
 
-  def validate_and_send_denial_notice
-    if employer_profile.present? && primary_office_location.present? && primary_office_location.address.present?
-      employer_profile.validate_and_send_denial_notice
-    end
-  end
-
   def generate_hbx_id
-    write_attribute(:hbx_id, HbxIdGenerator.generate_organization_id) if hbx_id.blank?
+    write_attribute(:hbx_id, ::HbxIdGenerator.generate_organization_id) if hbx_id.blank?
   end
 
   # Strip non-numeric characters

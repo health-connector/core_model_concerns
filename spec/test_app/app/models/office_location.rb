@@ -1,3 +1,3 @@
 class OfficeLocation
-  include LocationModelConcerns::OfficeLocationConcern
+  include OfficeLocationCoreConcern
 end
