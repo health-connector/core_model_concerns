@@ -310,6 +310,7 @@ DEPENDENCIES
   fakeredis
   location_model_concerns!
   mongoid
+  mongoid-autoinc
   mongoid-rspec (= 3.0.0)
   mongoid-versioning
   poltergeist
