@@ -10,11 +10,19 @@ FactoryBot.define do
     after(:create) do |p, evaluator|
       create_list(:address, 2, person: p)
       create_list(:phone, 2, person: p)
-      #create_list(:email, 2, person: p)
+      create_list(:email, 2, person: p)
     end
 
     trait :with_ssn do
       sequence(:ssn) { |n| 222222220 + n }
+    end
+
+    trait :with_work_email do
+      emails { [FactoryBot.build(:email, kind: "work") ] }
+    end
+
+    trait :with_work_phone do
+      phones { [FactoryBot.build(:phone, kind: "work") ] }
     end
   end
 end

@@ -6,7 +6,7 @@ module PersonConcern
   included do |base|
     include ConfigAcaLocationConcern
     include ConfigSiteDescriptionConcern
-    include UnsetableSparseFieldsConcern
+    include Behaviors::UnsetableSparseFields
     include Mongoid::Document
     include Mongoid::Timestamps
     include Mongoid::Versioning
@@ -17,6 +17,9 @@ module PersonConcern
     base::RELATIONSHIP_CHANGE_ATTRIBUTES = RELATIONSHIP_CHANGE_ATTRIBUTES
 
     belongs_to :user
+
+    embeds_many :emails, cascade_callbacks: true, validate: true
+    accepts_nested_attributes_for :emails, :reject_if => Proc.new { |addy| Email.new(addy).blank? }
 
     field :hbx_id, type: String
     field :name_pfx, type: String
@@ -227,7 +230,7 @@ module PersonConcern
       end
 
       def generate_hbx_id
-        write_attribute(:hbx_id, HbxIdGenerator.generate_member_id) if hbx_id.blank?
+        write_attribute(:hbx_id, ::HbxIdGenerator.generate_member_id) if hbx_id.blank?
       end
 
       def update_full_name

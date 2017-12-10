@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency "mongoid-autoinc"
   s.add_dependency 'money-rails', '~> 1.3.0'
   s.add_dependency "mongoid-enum"
+  s.add_dependency "location_model_concerns"
 
   s.add_dependency "forgery"
 end
