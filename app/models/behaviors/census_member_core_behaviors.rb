@@ -90,11 +90,11 @@ module Behaviors
           return nil
         end
         ssn_val = val.to_s.gsub(/\D/, '')
-        SymmetricEncryption.encrypt(ssn_val)
+        ::SymmetricEncryption.encrypt(ssn_val)
       end
 
       def decrypt_ssn(val)
-        SymmetricEncryption.decrypt(val)
+        ::SymmetricEncryption.decrypt(val)
       end
     end
   end

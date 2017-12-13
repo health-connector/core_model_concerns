@@ -4,7 +4,7 @@ module OfficeLocationCoreConcern
   extend ActiveSupport::Concern
 
   included do
-    include OfficeLocationConcern
+    include LocationModelConcerns::OfficeLocationConcern
 
     embedded_in :organization
   end
@@ -12,7 +12,7 @@ module OfficeLocationCoreConcern
   class_methods do
     ## class methods and constants go here
   end
-  
+
   def parent
     self.organization
   end
