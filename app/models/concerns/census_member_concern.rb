@@ -5,13 +5,9 @@ module CensusMemberConcern
 
   included do
     include Behaviors::CensusMemberCoreBehaviors
-    include Behaviors::UnsetableSparseFields
     include Behaviors::StrippedNames
 
     validates_with Validations::DateRangeValidator
-
-    field :employee_relationship, type: String
-    field :employer_assigned_family_id, type: String
 
     embeds_one :address
     accepts_nested_attributes_for :address, reject_if: :all_blank, allow_destroy: true

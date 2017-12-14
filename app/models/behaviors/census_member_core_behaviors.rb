@@ -4,9 +4,10 @@ module Behaviors
   module CensusMemberCoreBehaviors
     extend ActiveSupport::Concern
 
-    included do
+    included do |base|
       include Mongoid::Document
       include Mongoid::Timestamps
+      include Behaviors::UnsetableSparseFields
 
       field :first_name, type: String
       field :middle_name, type: String
@@ -16,6 +17,9 @@ module Behaviors
       field :encrypted_ssn, type: String
       field :dob, type: Date
       field :gender, type: String
+
+      field :employee_relationship, type: String
+      field :employer_assigned_family_id, type: String
 
       validates_presence_of :first_name, :last_name, :dob
 
@@ -42,7 +46,7 @@ module Behaviors
       # SSN validation rules, see: http://www.ssa.gov/employer/randomizationfaqs.html#a0=12
       def ssn=(new_ssn)
         if !new_ssn.blank?
-          write_attribute(:encrypted_ssn, CensusMember.encrypt_ssn(new_ssn))
+          write_attribute(:encrypted_ssn, self.class.encrypt_ssn(new_ssn))
         else
           unset_sparse("encrypted_ssn")
         end
@@ -51,7 +55,7 @@ module Behaviors
       def ssn
         ssn_val = read_attribute(:encrypted_ssn)
         if !ssn_val.blank?
-          CensusMember.decrypt_ssn(ssn_val)
+          self.class.decrypt_ssn(ssn_val)
         else
           nil
         end
